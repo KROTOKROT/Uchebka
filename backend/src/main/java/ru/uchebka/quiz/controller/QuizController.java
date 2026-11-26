@@ -1,0 +1,3 @@
+package ru.uchebka.quiz.controller;
+import jakarta.validation.Valid;import org.springframework.web.bind.annotation.*;import ru.uchebka.quiz.dto.*;import ru.uchebka.quiz.service.QuizService;
+@RestController @RequestMapping("/api/quizzes") public class QuizController{private final QuizService service;public QuizController(QuizService service){this.service=service;}@PostMapping("/generate") public QuizResponse generate(@Valid @RequestBody GenerateQuizRequest request){return service.generate(request);}}

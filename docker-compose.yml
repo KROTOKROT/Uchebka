@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: uchebka-backend
+    restart: unless-stopped
+    environment:
+      YANDEX_API_KEY: ${YANDEX_API_KEY:-}
+      YANDEX_PROJECT_ID: ${YANDEX_PROJECT_ID:-b1gfj3v8keh3qobuh6rv}
+      YANDEX_PROMPT_ID: ${YANDEX_PROMPT_ID:-fvt27hjfedvl5f9qs3lk}
+      YANDEX_BASE_URL: https://ai.api.cloud.yandex.net/v1
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost}
+    expose:
+      - "8080"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: /api
+    container_name: uchebka-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${APP_PORT:-80}:80"

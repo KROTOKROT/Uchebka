@@ -1,0 +1,3 @@
+package ru.uchebka.config;
+import org.springframework.context.annotation.Bean;import org.springframework.context.annotation.Configuration;import org.springframework.http.client.SimpleClientHttpRequestFactory;import org.springframework.web.client.RestClient;
+@Configuration public class HttpClientConfig { @Bean RestClient yandexRestClient(YandexProperties p){var f=new SimpleClientHttpRequestFactory();var t=p.timeout()==null?java.time.Duration.ofSeconds(45):p.timeout();f.setConnectTimeout(t);f.setReadTimeout(t);return RestClient.builder().baseUrl(p.baseUrl()).requestFactory(f).build();} }
